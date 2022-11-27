@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -48,6 +50,14 @@ public class TiendaController implements Initializable {
     private HBox hbox2Top10;
     
     public static String textoaBuscar;
+    @FXML
+    private HBox hboxCabeza;
+    @FXML
+    private Button btnAdelante;
+    @FXML
+    private Button btnAtras;
+    @FXML
+    private ComboBox<?> cbxCategorías;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,6 +122,7 @@ public class TiendaController implements Initializable {
             btnBuscar.getScene().setRoot(root);
         }
     }
+    
 
     private void cargarPrincipales() {
         for (int x = 1; x <= 5; x++) {
@@ -121,7 +132,7 @@ public class TiendaController implements Initializable {
                 ImageView imgview = new ImageView(img);
                 imgview.setFitHeight(100);
                 imgview.setFitWidth(100);
-                vbx.getChildren().addAll(imgview, new Label("TITULO 1"), new Label("TITULO 2"), new Label("OTROS DATOS"), new Label("OTROS DATOS 2"));
+                vbx.getChildren().addAll(imgview, new Label("TITULO"));
                 hboxPrincipales.getChildren().add(vbx);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -183,6 +194,14 @@ public class TiendaController implements Initializable {
         }
         hbox2Top10.setSpacing(30);
         hbox2Top10.setAlignment(Pos.CENTER_LEFT);
+    }
+
+    @FXML
+    private void irAdelante(ActionEvent event) {
+    }
+
+    @FXML
+    private void irAtras(ActionEvent event) {
     }
 
 }

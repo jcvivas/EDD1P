@@ -1,0 +1,27 @@
+.button {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#B593F1, #341072);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.label {
+    -fx-font-size: 20px;
+    -fx-padding: 10 15 10 15;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-allignament: "CENTER";
+    -fx-text-fill: FFFFFF;
+    
+}
+
+#tit{
+        -fx-font-size: 35px;
+    }
+    
+#fondo{
+     -fx-background-color: linear-gradient(#341072, #B593F1);
+    
+}

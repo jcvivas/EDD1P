@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.Usuario;
+import tdas.ArrayList;
 
 public class InicialController implements Initializable {
 
@@ -49,7 +50,7 @@ public class InicialController implements Initializable {
             while (linea != null) {
                 String[] cuenta = linea.strip().split(";");
                 Usuario u = new Usuario(String.valueOf(cuenta[0].strip()), String.valueOf(cuenta[1].strip()), cuenta[2].charAt(0));
-                cuentas.add(u);
+                cuentas.addLast(u);
                 linea = br.readLine();
             }
             br.close();

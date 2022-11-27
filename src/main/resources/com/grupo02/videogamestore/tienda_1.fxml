@@ -16,48 +16,15 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
     </padding>
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hboxCabeza" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="1023.0" spacing="20.0">
          <children>
-            <ImageView fitHeight="58.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../imagenes/EDD.png" />
-               </image>
-            </ImageView>
             <Label text="VIDEOGAME STORE">
                <font>
                   <Font size="18.0" />
                </font>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
             </Label>
-            <TextField fx:id="txtBuscador" prefHeight="25.0" prefWidth="168.0" promptText="Buscar en la tienda">
-               <HBox.margin>
-                  <Insets left="50.0" top="15.0" />
-               </HBox.margin>
-            </TextField>
-            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVideojuego" text="Buscar">
-               <HBox.margin>
-                  <Insets left="15.0" top="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Biblioteca">
-               <HBox.margin>
-                  <Insets left="100.0" top="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Lista de deseos">
-               <HBox.margin>
-                  <Insets left="20.0" top="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="btnCambiarUsuario" mnemonicParsing="false" onAction="#cambiarUsuario" text="Cerrar sesión">
-               <HBox.margin>
-                  <Insets left="40.0" top="15.0" />
-               </HBox.margin></Button>
+            <Button fx:id="btnCambiarUsuario" mnemonicParsing="false" onAction="#cambiarUsuario" text="CAMBIAR DE USUARIO" />
          </children>
-      </HBox>
-      <HBox fx:id="hboxCabeza" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="1023.0" spacing="20.0">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -66,9 +33,16 @@
          <children>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="277.0" spacing="15.0">
                <children>
-                  <Button fx:id="btnAdelante" mnemonicParsing="false" onAction="#irAdelante" text="&lt;" />
-                  <Label text="NOVEDADES" />
-                  <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#irAtras" text="&gt;" />
+                  <Label text="BUSCAR: " />
+                  <TextField fx:id="txtBuscador" />
+                  <Button fx:id="btnBuscar" minWidth="42.0" mnemonicParsing="false" onAction="#buscarVideojuego" prefHeight="22.0" prefWidth="42.0">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/lupa.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </HBox>
             <HBox fx:id="hboxPrincipales" prefHeight="249.0" prefWidth="1023.0" />

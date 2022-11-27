@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" cacheShape="false" centerShape="false" prefHeight="200.0" prefWidth="340.0" scaleShape="false" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.InicialController">
+<VBox id="fondo" alignment="CENTER" cacheShape="false" centerShape="false" prefHeight="350.0" prefWidth="449.0" scaleShape="false" spacing="10.0" stylesheets="@../../../estilos/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.InicialController">
    <children>
-      <Label text="BIENVENIDO" />
+      <Label fx:id="tit" text="BIENVENIDO" />
       <GridPane alignment="CENTER" hgap="10.0" prefWidth="340.0" vgap="10.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,8 +26,8 @@
          <children>
             <Label text="USUARIO" />
             <Label text="CONTRASEÑA" GridPane.rowIndex="1" />
-            <PasswordField fx:id="txtpassword" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" promptText="pssword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" promptText="user1" GridPane.columnIndex="1" />
+            <PasswordField fx:id="txtpassword" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="140.0" promptText="user" GridPane.columnIndex="1" />
          </children>
          <padding>
             <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
