@@ -4,6 +4,8 @@
  */
 package tdas;
 
+import java.util.Stack;
+
 /**
  *
  * @author DELL
@@ -358,5 +360,25 @@ public class CDoublyLinkedList<E> {
     		item += "]";
         return item;
 
+    }
+    
+    public CDoublyLinkedList<E> getTen(LinkedList<E> actual){
+        CDoublyLinkedList<E> nueva = new CDoublyLinkedList<>();
+        int pos;
+        int nums=10;
+        Stack<Integer> numsRandoms= new Stack<Integer>();
+        for (int i=0;i<nums ;i++){
+            pos = (int) Math.floor(Math.random()*actual.size());
+            while (numsRandoms.contains(pos)){
+                pos= (int) Math.floor(Math.random()*actual.size());
+            }
+            numsRandoms.push(pos);
+        }
+        
+        for(Integer i:numsRandoms){
+            nueva.addBack(actual.get(i));
+        }
+        return nueva;     
+        
     }
 }
