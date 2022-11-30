@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo;
+package com.grupo02.videogamestore.modelo;
 
 import javafx.scene.image.Image;
-import tdas.LinkedList;
+import com.grupo02.TDAs.LinkedList;
 
 /**
  *
@@ -18,16 +18,16 @@ public class Juego {
     private Image captura;
     private LinkedList<Genero> genero;
     private LinkedList<Desarrollador> desarrollador;
-    private LinkedList<String> Reseña;
+    private LinkedList<Resena> resenas;
 
-    public Juego(String titulo, String descripcion, Image imagen, Image captura, LinkedList<Genero> genero, LinkedList<Desarrollador> desarrollador, LinkedList<String> Reseña) {
+    public Juego(String titulo, String descripcion, Image imagen, Image captura, LinkedList<Genero> genero, LinkedList<Desarrollador> desarrollador, LinkedList<Resena> resenas) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.captura = captura;
         this.genero = genero;
         this.desarrollador = desarrollador;
-        this.Reseña = Reseña;
+        this.resenas = resenas;
     }
 
     public Juego(String titulo) {
@@ -82,17 +82,17 @@ public class Juego {
         this.desarrollador = desarrollador;
     }
 
-    public LinkedList<String> getReseña() {
-        return Reseña;
+    public LinkedList<Resena> getReseña() {
+        return resenas;
     }
 
-    public void setReseña(LinkedList<String> Reseña) {
-        this.Reseña = Reseña;
+    public void setReseña(LinkedList<Resena> resenas) {
+        this.resenas = resenas;
     }
 
     @Override
     public String toString() {
-        return "Juego{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", imagen=" + imagen + ", captura=" + captura + ", genero=" + genero + ", desarrollador=" + desarrollador + ", Rese\u00f1a=" + Reseña + '}';
+        return "Juego{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", imagen=" + imagen + ", captura=" + captura + ", genero=" + genero + ", desarrollador=" + desarrollador + ", Rese\u00f1a=" + resenas + '}';
     }
     
     

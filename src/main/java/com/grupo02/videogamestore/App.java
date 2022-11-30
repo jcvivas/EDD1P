@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import modelo.Usuario;
+import com.grupo02.videogamestore.modelo.Usuario;
 
 // Probando git
 /**

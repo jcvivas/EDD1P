@@ -1,5 +1,7 @@
 package com.grupo02.videogamestore;
 
+import com.grupo02.TDAs.DoublyCircularLinkedList;
+import com.grupo02.videogamestore.modelo.Juego;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -77,8 +79,8 @@ public class TiendaController implements Initializable {
         p.addEventHandler(MouseEvent.MOUSE_ENTERED, me -> {
             p.getChildren().add(indice2, btndere);
             p.getChildren().add(indice1, btnizq);
-            mostrarAnteriores(btnizq);
-            mostrarSiguientes(btndere);
+            //mostrarAnteriores(btnizq);
+            //mostrarSiguientes(btndere);
         });
     }
 
@@ -89,14 +91,30 @@ public class TiendaController implements Initializable {
         });
     }
 
+    public VBox cargarJuego(Juego juego){
+        return null;
+    }
+    
+    public void cargarJuegosHorizontal(DoublyCircularLinkedList<Juego> l, Juego juego){
+        //for 
+    }
+    
+    public void cargarJuegosVertical(DoublyCircularLinkedList<Juego> l, Juego juego){
+        // for
+    }
+    
+    
     private void mostrarSiguientes(Button btn) {
         btn.setOnAction(acte -> {
             System.out.println(btn.getParent().getId() + "NEXT");
         });
     }
 
-    private void mostrarAnteriores(Button btn) {
+    private void mostrarAnteriores(Button btn, DoublyCircularLinkedList<Juego> l, Juego juego) {
         btn.setOnAction(acte -> {
+            
+            // Limpia el flowpane
+            // Carga los 6 antes del primero
             System.out.println(btn.getParent().getId() + "BACK");
         });
     }
@@ -125,6 +143,7 @@ public class TiendaController implements Initializable {
     
 
     private void cargarPrincipales() {
+        // temp = null;
         for (int x = 1; x <= 5; x++) {
             VBox vbx = new VBox();
             try ( FileInputStream input = new FileInputStream(App.fileImage + "lupa.png")) {

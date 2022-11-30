@@ -1,5 +1,6 @@
 package com.grupo02.videogamestore;
 
+import com.grupo02.TDAs.LinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,15 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.Usuario;
-import tdas.ArrayList;
+import com.grupo02.videogamestore.modelo.Usuario;
 
 public class InicialController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    private static ArrayList<Usuario> cuentas;
+    private static LinkedList<Usuario> cuentas;
 
     @FXML
     private TextField txtUsuario;
@@ -43,8 +43,8 @@ public class InicialController implements Initializable {
         cuentas = cargarCuentas();
     }
 
-    private ArrayList<Usuario> cargarCuentas() {
-        ArrayList<Usuario> cuentas = new ArrayList();
+    private LinkedList<Usuario> cargarCuentas() {
+        LinkedList<Usuario> cuentas = new LinkedList();
         try ( BufferedReader br = new BufferedReader(new FileReader(App.filePath + "usuarios.txt"))) {
             String linea = br.readLine();
             while (linea != null) {
@@ -104,7 +104,7 @@ public class InicialController implements Initializable {
         stage.show();
     }
 
-    public static ArrayList<Usuario> getCuentas() {
+    public static LinkedList<Usuario> getCuentas() {
         return cuentas;
     }
 

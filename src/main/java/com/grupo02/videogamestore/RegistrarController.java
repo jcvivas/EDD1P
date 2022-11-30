@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.Usuario;
+import com.grupo02.videogamestore.modelo.Usuario;
 
 public class RegistrarController implements Initializable {
 
