@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -61,9 +62,24 @@ public class TiendaController implements Initializable {
     private Button btnAtras;
     @FXML
     private ComboBox<?> cbxCategorías;
+    
+    private DoublyCircularLinkedList<Juego> listadeJuegos;
+
+    private static NodeList<Juego> nodofinalPrincipal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        listadeJuegos = new DoublyCircularLinkedList<>();
+//        listadeJuegos.addLast(new Juego("TEXTO1"));
+//        listadeJuegos.addLast(new Juego("TEXTO2"));
+//        listadeJuegos.addLast(new Juego("TEXTO3"));
+//        listadeJuegos.addLast(new Juego("TEXTO4"));
+//        listadeJuegos.addLast(new Juego("TEXTO5"));
+//        listadeJuegos.addLast(new Juego("TEXTO6"));
+//        listadeJuegos.addLast(new Juego("TEXTO7"));
+//        listadeJuegos.addLast(new Juego("TEXTO8"));
+//        listadeJuegos.addLast(new Juego("TEXTO9"));
+//        listadeJuegos.addLast(new Juego("TEXTO10"));
         cargarPrincipales();
         cargarCategorías();
         cargarTOPJugados();
@@ -98,10 +114,86 @@ public class TiendaController implements Initializable {
             p.getChildren().remove(indice1);
         });
     }
-
-    public VBox cargarJuego(Juego juego){
-        return null;
+    
+    public VBox cargarJuego(Juego j) {//LUIS
+        VBox vbx = new VBox();
+        vbx.getChildren().addAll(obtenerImagen(j, 150, 200), new Label(j.getTitulo()));
+        vbx.setOnMouseClicked(mc -> cargarDetalleJuego(j));
+        return vbx;
     }
+    
+    public ImageView obtenerImagen(Juego j, int h, int w) {//LUIS
+        ImageView imgview = new ImageView();
+        try ( FileInputStream input = new FileInputStream(App.fileImage + "lupa.png")) {
+            Image img = new Image(input);
+            imgview.setImage(img);
+            imgview.setFitHeight(h);
+            imgview.setFitWidth(w);
+        } catch (IOException ex) {
+            System.out.println("Error imagen 1");
+        }
+        return imgview;
+    }
+    
+    public void cargarDetalleJuego(Juego j) { //LUIS
+        Stage stage = new Stage();
+        VBox root = new VBox();
+        Scene scene = new Scene(root, 250, 355);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(0, 10, 0, 10));
+        VBox datos = new VBox();
+        Label lbltitulo = new Label(j.getTitulo());
+        Label lbldes = new Label(j.getDescripcion());
+        Label lbldev = new Label("DESARROLLADOR");
+        Label lblgenero = new Label("GENERO");
+        Label lblreseña = new Label("RESEÑAS");
+        datos.getChildren().addAll(lbltitulo, lbldes, lbldev, lblgenero, lblreseña);
+        datos.setAlignment(Pos.CENTER);
+        datos.setStyle("-fx-background-color:#86b5fc");
+        root.setSpacing(20);
+        root.getChildren().addAll(obtenerImagen(j, 100, 150), datos);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+//    private void mostraBotones(Pane p, NodeList<Juego> nodo) {
+//        NodeList<Juego> n = nodo;
+//        Button btn2 = new Button("SIGUIENTE");
+//        Button btn1 = new Button("ATRÁS");
+//        p.addEventHandler(MouseEvent.MOUSE_ENTERED, me -> {
+//            p.getChildren().add(1, btn2);
+//            p.getChildren().add(0, btn1);
+//        });
+//        btn1.setOnAction(acte -> {
+//            mostrarAnteriores(flwpnPrinciaples, 3);
+//        });
+//        btn2.setOnAction(acte -> {
+//            mostrarSiguientes(flwpnPrinciaples, 3);
+//        });
+//    }
+//
+//    private void eliminarBotones(Pane p) {
+//        p.addEventHandler(MouseEvent.MOUSE_EXITED, me -> {
+//            p.getChildren().remove(2);
+//            p.getChildren().remove(0);
+//        });
+//    }
+//
+//    private void mostrarSiguientes(Pane p, int cant) {
+//        p.getChildren().clear();
+//        for (int x = 1; x <= cant; x++) {
+//            p.getChildren().add(cargarJuego(nodofinalPrincipal.getContent()));
+//            nodofinalPrincipal = nodofinalPrincipal.getNext();
+//        }
+//    }
+//
+//    private void mostrarAnteriores(Pane p, int cant) {
+//        p.getChildren().clear();
+//        for (int x = 1; x <= cant; x++) {
+//            p.getChildren().add(cargarJuego(nodofinalPrincipal.getContent()));
+//            nodofinalPrincipal = nodofinalPrincipal.getPrevius();
+//        }
+//    }
     
     public void mostrarSiguientes(DoublyCircularLinkedList<Juego> l, Pane p){
         NodeList<Juego> temp = l.getFirst();
@@ -167,6 +259,19 @@ public class TiendaController implements Initializable {
             btnBuscar.getScene().setRoot(root);
         }
     }
+    
+//    private void cargarPrincipales(DoublyCircularLinkedList<Juego> l) {
+//        nodofinalPrincipal = l.getFirst();
+//        for (int x = 1; x <= 3; x++) {
+//            flwpnPrinciaples.getChildren().add(cargarJuego(nodofinalPrincipal.getContent()));
+//            nodofinalPrincipal = nodofinalPrincipal.getNext();
+//        }
+//        flwpnPrinciaples.setAlignment(Pos.CENTER);
+//        flwpnPrinciaples.setHgap(100);
+//        flwpnPrinciaples.setVgap(100);
+//        mostraBotones(vboxPrincipales, nodofinalPrincipal);
+//        eliminarBotones(vboxPrincipales);
+//    }
     
 
     private void cargarPrincipales() {
