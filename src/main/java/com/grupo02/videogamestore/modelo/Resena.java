@@ -20,7 +20,7 @@ public class Resena {
         this.critico = critico;
         this.calificacion = calificacion;
         this.fecha = fecha;
-        this.mensaje = mensaje;
+        this.mensaje = texto;
     }
     
     

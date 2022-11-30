@@ -21,7 +21,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         int cont = 0;
         if (!this.isEmpty()) {
             cont++;
-            for (NodeList<E> n = head.getNext(); n != head; n.getNext()) {
+            for (NodeList<E> n = head.getNext(); n != head; n = n.getNext()) {
                 cont++;
             }
         }
@@ -85,6 +85,8 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         return true;
     }
 
+    
+    
     public NodeList<E> getLast(){
         return head.getPrevius();
     }
@@ -97,7 +99,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
             private NodeList<E> cursor = head;;
             @Override
             public boolean hasNext() {
-                return cursor != head && i++ < size;
+                return i++ < size;
             }
 
             @Override
@@ -109,6 +111,34 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         };
 
         return it;
+    }
+    
+    public E removeLast(){
+        NodeList<E> temp = null;
+        if (this.isEmpty()) {
+            return null;
+        }
+        temp = head.getPrevius();
+        NodeList<E> tempL = head;
+        NodeList<E> tempP = temp.getPrevius();
+        tempL.setPrevius(tempP);
+        tempP.setNext(tempL);
+        return temp.getContent();
+        
+    }
+    
+    public E removeFirst(){
+        NodeList<E> temp = null;
+        if (this.isEmpty()) {
+            return null;
+        }
+        temp = head;
+        NodeList<E> tempL = head.getNext();
+        NodeList<E> tempP = head.getPrevius();
+        tempL.setPrevius(tempP);
+        tempP.setNext(tempL);
+        this.head = tempL;
+        return temp.getContent();
     }
     
     @Override

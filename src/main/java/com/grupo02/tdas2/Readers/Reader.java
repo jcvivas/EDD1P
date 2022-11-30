@@ -4,9 +4,14 @@
  */
 package com.grupo02.tdas2.Readers;
 
+import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.LinkedList;
+import com.grupo02.videogamestore.App;
+import com.grupo02.videogamestore.modelo.Juego;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.ObjectInputStream;
 
 /**
  *
@@ -34,11 +39,13 @@ public class Reader {
         }
         return lineas;
     }
-    // id|name|date|developer|positiveRatings|price|header_image|screenshots|short_description
-    private static void leerJuegos(String archivo){
-        LinkedList<String> lineas = leerDatos(archivo);
-        for (String l: lineas){
-            
+    private static DoublyCircularLinkedList<Juego> cargarJuegos(String archivo){
+        DoublyCircularLinkedList<Juego> juego = null;
+        try ( ObjectInputStream oos = new ObjectInputStream(new FileInputStream(App.filePath+archivo))) {
+            juego = (DoublyCircularLinkedList<Juego>) oos.readObject();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return juego;
     }
 }

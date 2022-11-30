@@ -1,6 +1,7 @@
 package com.grupo02.videogamestore;
 
 import com.grupo02.TDAs.DoublyCircularLinkedList;
+import com.grupo02.TDAs.NodeList;
 import com.grupo02.videogamestore.modelo.Juego;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -82,6 +83,13 @@ public class TiendaController implements Initializable {
             //mostrarAnteriores(btnizq);
             //mostrarSiguientes(btndere);
         });
+        
+        btndere.setOnAction(acte -> {
+//            mostrarAnteriores();
+        });
+        btnizq.setOnAction(acte -> {
+//            mostrarSiguientes();
+        });
     }
 
     private void eliminarBotones(Pane p, int indice1, int indice2) {
@@ -95,12 +103,31 @@ public class TiendaController implements Initializable {
         return null;
     }
     
-    public void cargarJuegosHorizontal(DoublyCircularLinkedList<Juego> l, Juego juego){
-        //for 
+    public void mostrarSiguientes(DoublyCircularLinkedList<Juego> l, Pane p){
+        NodeList<Juego> temp = l.getFirst();
+        NodeList<Juego> tempF = l.getLast();
+        int size = l.size();
+        for (int x = 0; x < size; x++){
+            p.getChildren().add(cargarJuego(temp.getContent()));
+            temp = temp.getNext();
+            tempF = tempF.getNext();
+            l.addLast(tempF.getContent());
+            l.removeFirst();
+        }
+        
     }
     
-    public void cargarJuegosVertical(DoublyCircularLinkedList<Juego> l, Juego juego){
-        // for
+    public void mostrarAnteriores(DoublyCircularLinkedList<Juego> l, Pane p){
+        NodeList<Juego> temp = l.getLast();
+        NodeList<Juego> tempF = l.getFirst();
+        int size = l.size();
+        for (int x = 0; x < size; x++){
+            p.getChildren().add(cargarJuego(temp.getContent()));
+            temp = temp.getPrevius();
+            tempF = tempF.getPrevius();
+            l.addFirst(tempF.getContent());
+            l.removeLast();
+        }
     }
     
     
