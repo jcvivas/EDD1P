@@ -31,6 +31,26 @@ public class LinkedList<E> implements List<E> {
     public boolean isEmpty() {
         return head == null;
     }
+    
+    @Override
+    public boolean contains(E element){
+        for (E eCompare: this){
+            if (element.equals(eCompare)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean containsString(String s, LinkedList<String> lista){
+        for (String e: lista){
+            if (e.toLowerCase().contains(s.toLowerCase())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     @Override
     public boolean addFirst(E e) {

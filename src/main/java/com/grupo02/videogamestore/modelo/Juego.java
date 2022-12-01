@@ -28,11 +28,19 @@ public class Juego implements Serializable{
         this.imagen = imagen;
     }
 
+    public Juego(Date date){
+        this.lanzamiento = date;
+    }
+    
+    public Juego(String titulo){
+        this.titulo = titulo;
+    }
+    
     @Override
     public String toString() {
         return "Juego{" + "titulo=" + titulo + ", lanzamiento=" + lanzamiento + '}';
     }
-
+    
     
     
     public Date getLanzamiento() {

@@ -1,7 +1,7 @@
 package com.grupo02.videogamestore;
 
 import com.grupo02.TDAs.DoublyCircularLinkedList;
-import com.grupo02.tdas2.Readers.Reader;
+import com.grupo02.Readers.Reader;
 import com.grupo02.videogamestore.modelo.Juego;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

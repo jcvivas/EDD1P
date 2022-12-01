@@ -32,7 +32,17 @@ public class DoublyLinkedList<E> implements List<E>{
     public boolean isEmpty() {
         return head ==  null;
     }
-
+    
+    @Override
+    public boolean contains(E element){
+        for (E eCompare: this){
+            if (element.equals(eCompare)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     @Override
     public boolean addFirst(E e) {
         if (this.isEmpty()){

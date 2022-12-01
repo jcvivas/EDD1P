@@ -5,8 +5,10 @@
 package com.grupo02.TDAs;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -167,6 +169,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         return temp.getContent();
     }
     
+    
     @Override
     public DoublyCircularLinkedList<E> findAll(E element, Comparator<E> cmp) {
         DoublyCircularLinkedList<E> result = new DoublyCircularLinkedList();
@@ -177,7 +180,27 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return result;
     }
-
+    
+    @Override
+    public boolean contains(E element){
+        for (E eCompare: this){
+            if (element.equals(eCompare)){
+                return true;
+            }
+        }
+        return false;
+    }
+        
+    public Set<E> findAllSet(E element, Comparator<E> cmp) {
+        Set<E> result = new HashSet();
+        for (E eCompare : this) {
+            if (cmp.compare(element, eCompare) == 0) {
+                result.add(eCompare);
+            }
+        }
+        return result;
+    }
+    
     @Override
     public DoublyCircularLinkedList<E> findLower(E element, Comparator<E> cmp) {
 

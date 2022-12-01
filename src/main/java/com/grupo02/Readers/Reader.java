@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.grupo02.tdas2.Readers;
+package com.grupo02.Readers;
 
 import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.LinkedList;
@@ -22,6 +22,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,6 +40,9 @@ public class Reader {
      * @return Retorna todas un ArrayList con todas las lineas del archivo dado
      * como parámetro.
      */
+    
+    public static HashSet<String> desarrolladoras = new HashSet();
+    public static HashSet<String> generos = new HashSet();
     private static LinkedList<String> leerDatos(String archivo) {
         LinkedList<String> lineas = new LinkedList();
         try ( BufferedReader bf = new BufferedReader(new FileReader(archivo))) {
@@ -64,6 +68,15 @@ public class Reader {
             juego = (DoublyCircularLinkedList<Juego>) oos.readObject();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+        for (Juego j: juego){
+            for (String g: j.getGenero()){
+                generos.add(g);
+            }
+            for (String g: j.getDesarrollador()){
+                desarrolladoras.add(g);
+            }
+            
         }
         return juego;
     }
@@ -152,6 +165,16 @@ public class Reader {
                 try {
                     Date lanzamiento = sdf.parse(p[2]);
                     juego.setLanzamiento(lanzamiento);
+                    for (String developer: p[3].split("\\;")){
+                        juego.getDesarrollador().addLast(developer);
+                    }
+                    
+                    // id|name|date|developer|positiveRatings|price|header_image|screenshots|short_description
+                    
+                    for (String genres: p[9].split("\\;")){
+                        juego.getGenero().addLast(genres);
+                    }
+                    
                     juegos.addLast(juego);
                 } catch (ParseException ex) {
                     ex.printStackTrace();
@@ -165,6 +188,7 @@ public class Reader {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        
     }
     
     public static DoublyCircularLinkedList<Juego> inicializarLista(DoublyCircularLinkedList<Juego> juegos, int valor){

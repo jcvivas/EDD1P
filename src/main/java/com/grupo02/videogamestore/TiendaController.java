@@ -2,12 +2,19 @@ package com.grupo02.videogamestore;
 
 import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.NodeList;
-import com.grupo02.tdas2.Readers.Reader;
+import com.grupo02.Readers.Reader;
+import com.grupo02.TDAs.LinkedList;
+import com.grupo02.comparators.ByGenre;
+import com.grupo02.comparators.ByName;
+import com.grupo02.comparators.ByYear;
 import com.grupo02.videogamestore.modelo.Juego;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,31 +59,53 @@ public class TiendaController implements Initializable {
 
     @FXML
     private HBox hboxCategorías;
-    
+
     @FXML
     private HBox juegosCategorías;
 
     public static String textoaBuscar;
 
     @FXML
-    private HBox hboxCabeza;
+    private VBox rootPrincipal;
+    @FXML
+    private VBox vboxP;
 
     @FXML
-    private Button btnAdelante;
+    private ComboBox<String> cbxCategorias;
 
-    @FXML
-    private Button btnAtras;
-
-    @FXML
-    private ComboBox<?> cbxCategorías;
-
-    private static DoublyCircularLinkedList<Juego> listaJuegos;
+    public static DoublyCircularLinkedList<Juego> listaJuegos;
+    public static HashSet<String> generos;
+    public static HashSet<String> desarrolladoras;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listaJuegos = Reader.cargarJuegos("games_data.bin");
         cargarPrinciapal();
+        cbxCategorias.getItems().addAll(Reader.generos);
         //Reader.leerJuegos("games_data.csv");
+    }
+    
+    @FXML
+    public void cargarCategorias() throws IOException{
+        if(vboxP.getChildren().size()==2){
+            vboxP.getChildren().remove(1);
+        }
+        HBox paneCategoria = new HBox();
+        paneCategoria.setAlignment(Pos.CENTER);
+        HBox hboxCategoria = new HBox();
+        hboxCategoria.setAlignment(Pos.CENTER);
+        hboxCategoria.setSpacing(10);
+        paneCategoria.getChildren().add(hboxCategoria);
+        vboxP.getChildren().add(paneCategoria);
+        Juego jBuscar = new Juego("");
+        String cat = cbxCategorias.getValue();
+        jBuscar.getGenero().addFirst(cat);
+        
+        DoublyCircularLinkedList<Juego> mostrar = listaJuegos.findAll(jBuscar, new ByGenre());
+        TiendaController.cargarJuegos(mostrar, 3, hboxCategoria, paneCategoria, 75, 200);
+            
+        
+
     }
 
     public static VBox cargarJuego(Juego j, int largo, int ancho) {//LUIS
@@ -126,7 +155,6 @@ public class TiendaController implements Initializable {
             mostrarSiguientes(pJuegos, mostrados, originales, largo, ancho);
         });
     }
-//
 
     private static void eliminarBotones(Pane pExterior) {
         pExterior.addEventHandler(MouseEvent.MOUSE_EXITED, me -> {
@@ -136,8 +164,10 @@ public class TiendaController implements Initializable {
     }
 
     private static void renderizarJuegos(DoublyCircularLinkedList<Juego> juegos, Pane p, int largo, int ancho) {
-        for (Juego j : juegos) {
-            p.getChildren().add(cargarJuego(j, largo, ancho));
+        if (!juegos.isEmpty()) {
+            for (Juego j : juegos) {
+                p.getChildren().add(cargarJuego(j, largo, ancho));
+            }
         }
     }
 
@@ -180,23 +210,22 @@ public class TiendaController implements Initializable {
 
     @FXML
     private void buscarVideojuego() throws IOException {
-        if (!txtBuscador.getText().isBlank()) {
-            textoaBuscar = txtBuscador.getText();
-            FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("buscar.fxml"));
-            Parent root = fxmLoader.load();
-            btnBuscar.getScene().setRoot(root);
-        }
+        FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("buscar.fxml"));
+        Parent root = fxmLoader.load();
+        btnBuscar.getScene().setRoot(root);
+
     }
 
-    private static void cargarJuegos(DoublyCircularLinkedList<Juego> originales, int cantidadJuegos, Pane pJuegos, Pane pExterior, int largo, int ancho) {
+    public static void cargarJuegos(DoublyCircularLinkedList<Juego> originales, int cantidadJuegos, Pane pJuegos, Pane pExterior, int largo, int ancho) {
+        
         DoublyCircularLinkedList<Juego> mostrados = Reader.inicializarLista(originales, cantidadJuegos);
         renderizarJuegos(mostrados, pJuegos, largo, ancho);
-        mostraBotones(pJuegos, pExterior, mostrados, originales, 105, 230);
+        mostraBotones(pJuegos, pExterior, mostrados, originales, largo, ancho);
         eliminarBotones(pExterior);
     }
 
     private void cargarPrinciapal() {
-        cargarJuegos(listaJuegos, 6, fpTienda, vboxPrincipal, 105, 230);
+        cargarJuegos(listaJuegos, 6, fpTienda, vboxPrincipal, 110, 330);
         cargarJuegos(listaJuegos, 3, juegosCategorías, hboxCategorías, 75, 200);
     }
 

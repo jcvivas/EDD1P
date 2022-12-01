@@ -30,7 +30,7 @@ public interface List<E> extends Iterable<E>, Serializable{
      */    
     boolean addFirst(E element);
     
-    
+    boolean contains(E element);
     
     boolean addLast(E element);
     /**

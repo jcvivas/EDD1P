@@ -2,34 +2,57 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.BuscarController">
+<VBox fx:id="rootBuscar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.BuscarController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="579.0">
          <children>
-            <Button fx:id="btnvolver" mnemonicParsing="false" onAction="#volver" text="VOLVER" />
+            <Button fx:id="btnvolver" mnemonicParsing="false" onAction="#volver" text="&lt;">
+               <font>
+                  <Font size="7.0" />
+               </font></Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="600.0">
+      <VBox alignment="CENTER" prefHeight="139.0" prefWidth="579.0" spacing="10.0">
          <children>
-            <Label fx:id="lblBusqueda">
+            <Label text="Tipos de busqueda">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <VBox fx:id="pName" alignment="CENTER_LEFT" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
+                     <children>
+                        <CheckBox fx:id="byTitle" mnemonicParsing="false" prefWidth="150.0" text="Por titulo:" />
+                        <TextField fx:id="textTitle" promptText="Ej: Conter" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="pDate" alignment="CENTER_LEFT" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
+                     <children>
+                        <CheckBox fx:id="byDate" mnemonicParsing="false" prefWidth="150.0" text="Por año:" />
+                        <TextField fx:id="textDate" promptText="Ej: 2002" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#buscarJuegos" text="Buscar" />
          </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </HBox>
-      <FlowPane fx:id="paneResultado" prefHeight="330.0" prefWidth="600.0" />
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </VBox>

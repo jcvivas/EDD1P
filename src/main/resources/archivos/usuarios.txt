@@ -1,2 +1,3 @@
 usuario;123;Ukk;kk;U
 kk;kk;U
+admin;admin;A
