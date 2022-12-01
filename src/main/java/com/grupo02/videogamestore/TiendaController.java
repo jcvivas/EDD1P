@@ -8,6 +8,7 @@ import com.grupo02.comparators.ByGenre;
 import com.grupo02.comparators.ByName;
 import com.grupo02.comparators.ByYear;
 import com.grupo02.videogamestore.modelo.Juego;
+import com.grupo02.videogamestore.modelo.Resena;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -20,12 +21,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,9 +54,6 @@ public class TiendaController implements Initializable {
 
     @FXML
     private Button btnBuscar;
-
-    @FXML
-    private TextField txtBuscador;
 
     @FXML
     private VBox vboxPrincipal;
@@ -121,21 +122,84 @@ public class TiendaController implements Initializable {
 
     public static void cargarDetalleJuego(Juego j) { //LUIS
         Stage stage = new Stage();
-        VBox root = new VBox();
-        Scene scene = new Scene(root, 880, 520);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(0, 10, 0, 10));
-        VBox datos = new VBox();
+        VBox contenido = new VBox();
+        ScrollPane root = new ScrollPane();
+        contenido.setAlignment(Pos.CENTER);
+        contenido.setPadding(new Insets(0, 10, 0, 10));
+        HBox datos = new HBox();
+        VBox infoBox = new VBox();
         Label lbltitulo = new Label(j.getTitulo());
+        lbltitulo.setFont(Font.font("Verdana", 30));
+        lbltitulo.setWrapText(true);
         Label lbldes = new Label(j.getDescripcion());
-        Label lbldev = new Label("DESARROLLADOR");
-        Label lblgenero = new Label("GENERO");
-        Label lblreseña = new Label("RESEÑAS");
-        datos.getChildren().addAll(lbltitulo, lbldes, lbldev, lblgenero, lblreseña);
+        lbldes.setPrefWidth(400);
+        lbldes.setFont(Font.font("Verdana", 20));
+        lbldes.setWrapText(true);
+        Label lbldev = new Label();
+        String textodev = "Desarrolladores: ";
+        for (String dev : j.getDesarrollador()) {
+            textodev = textodev + " - " + dev;
+        }
+        lbldev.setPrefWidth(400);
+        lbldev.setText(textodev);
+        lbldev.setFont(Font.font("Verdana", 10));
+        lbldev.setWrapText(true);
+        Label lblgenero = new Label();
+        String textogenero = "Géneros:";
+        for (String genero : j.getGenero()) {
+            textogenero = textogenero + " - " + genero;
+        }
+        lblgenero.setPrefWidth(400);
+        lblgenero.setText(textogenero);
+        lblgenero.setFont(Font.font("Verdana", 10));
+        lblgenero.setWrapText(true);
+        infoBox.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), 200, 340), lbltitulo, lbldes, lbldev, lblgenero);
+        infoBox.setStyle("-fx-background-color:#F8ECFF");
+        infoBox.setSpacing(15);
+        infoBox.setAlignment(Pos.CENTER);
+        Separator sv = new Separator(Orientation.VERTICAL);
+        sv.setPrefHeight(200);
+        VBox capturasbBox = new VBox();
+        Label lblcap = new Label("Capturas del juego");
+        lblcap.setFont(Font.font("Verdana", 24));
+        lblcap.setAlignment(Pos.CENTER);
+        FlowPane caps = new FlowPane();
+        for (String filecap : j.getCapturas()) {
+            caps.getChildren().add(Reader.obtenerImagen(filecap, 100, 180));
+        }
+        caps.setHgap(30);
+        caps.setVgap(30);
+        capturasbBox.getChildren().addAll(lblcap, caps);
+        capturasbBox.setAlignment(Pos.CENTER);
+        capturasbBox.setSpacing(15);
+        datos.setSpacing(15);
         datos.setAlignment(Pos.CENTER);
-        datos.setStyle("-fx-background-color:#86b5fc");
-        root.setSpacing(20);
-        root.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), 180, 320), datos);
+        datos.getChildren().addAll(infoBox, sv, capturasbBox);
+        Separator sh = new Separator(Orientation.HORIZONTAL);
+        sh.setPrefWidth(15);
+        VBox reseñasBox = new VBox();//caja de reseñas y carga una por una todo lo que viene debajo
+        for (Resena r : j.getResenas()) {
+            HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
+            VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
+            HBox cabeceradescripción = new HBox();//estrellas y la fecha
+            cabeceradescripción.getChildren().add(new Label(r.getFecha().toString()));
+            for (int x = 1; x <= r.getCalificacion(); x++) {
+                cabeceradescripción.getChildren().add(Reader.obtenerImagen("estrella.png", 15, 15));
+            }
+            cabeceradescripción.setSpacing(5);
+            descripcionBox.getChildren().addAll(cabeceradescripción, new Label(r.getMensaje()));
+            descripcionBox.setPadding(new Insets(5, 5, 5, 5));
+            reseña.getChildren().addAll(Reader.obtenerImagen("user.png", 25, 25), descripcionBox);
+            reseña.setStyle("-fx-background-color:#EEECFF");
+            reseña.setPadding(new Insets(5, 5, 5, 5));
+            reseñasBox.getChildren().add(reseña);
+        }
+        reseñasBox.setAlignment(Pos.CENTER_LEFT);
+        reseñasBox.setSpacing(15);
+        contenido.setSpacing(15);
+        contenido.getChildren().addAll(datos, sh, reseñasBox);
+        root.setContent(contenido);
+        Scene scene = new Scene(root, 900, 700);
         stage.setScene(scene);
         stage.show();
     }
