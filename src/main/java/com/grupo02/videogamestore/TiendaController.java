@@ -77,9 +77,16 @@ public class TiendaController implements Initializable {
     public static DoublyCircularLinkedList<Juego> listaJuegos;
     public static HashSet<String> generos;
     public static HashSet<String> desarrolladoras;
+    
+    private static LinkedList<Resena> resenas = new LinkedList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        resenas.addFirst(new Resena(App.fileImage + "user.png", 5, "QUE BUENO", new Date(2022)));
+        resenas.addFirst(new Resena(App.fileImage + "user.png", 2, "QUE MALO", new Date(2022)));
+        resenas.addFirst(new Resena(App.fileImage + "user.png", 3, "ESTUVO REGULAR", new Date(2022)));
+        resenas.addFirst(new Resena(App.fileImage + "user.png", 5, "ME LO COMPRARÉ", new Date(2022)));
+        resenas.addFirst(new Resena(App.fileImage + "user.png", 1, "NO GASTEN SU DINERO EN ESTO", new Date(2022)));
         listaJuegos = Reader.cargarJuegos("games_data.bin");
         cargarPrinciapal();
         cbxCategorias.getItems().addAll(Reader.generos);
@@ -178,7 +185,7 @@ public class TiendaController implements Initializable {
         Separator sh = new Separator(Orientation.HORIZONTAL);
         sh.setPrefWidth(15);
         VBox reseñasBox = new VBox();//caja de reseñas y carga una por una todo lo que viene debajo
-        for (Resena r : j.getResenas()) {
+        for (Resena r : resenas) {
             HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
             VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
             HBox cabeceradescripción = new HBox();//estrellas y la fecha
