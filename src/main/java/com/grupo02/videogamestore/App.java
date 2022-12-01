@@ -1,5 +1,8 @@
 package com.grupo02.videogamestore;
 
+import com.grupo02.TDAs.DoublyCircularLinkedList;
+import com.grupo02.tdas2.Readers.Reader;
+import com.grupo02.videogamestore.modelo.Juego;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +16,7 @@ import com.grupo02.videogamestore.modelo.Usuario;
  * JavaFX App
  */
 public class App extends Application {
-
+    public static DoublyCircularLinkedList<Juego> juegos;
     private static Scene scene;
     public static String filePath = "src/main/resources/archivos/";
     public static String fileImage = "src/main/resources/imagenes/";

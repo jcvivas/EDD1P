@@ -6,6 +6,7 @@ package com.grupo02.TDAs;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  *
@@ -125,6 +126,31 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         tempP.setNext(tempL);
         return temp.getContent();
         
+    }
+    
+    public NodeList<E> getNode(E element){
+        NodeList<E> nodeBuscar = new NodeList<E>(element);
+        if (nodeBuscar.equals(head)) {
+            return head;
+        }
+        for (NodeList<E> encontrado = head.getNext(); encontrado != head; encontrado = encontrado.getNext()) {
+            if (encontrado.equals(nodeBuscar)) {
+                return encontrado;
+            }
+        }
+        return null;
+    }
+    
+    
+    
+    public DoublyCircularLinkedList<E> subList(int pos){
+        DoublyCircularLinkedList<E> nueva = new DoublyCircularLinkedList();
+        NodeList<E> temp = this.getFirst();
+        for (int i = 0; i < pos; i++) {
+            nueva.addLast(temp.getContent());
+            temp = temp.getNext();
+        }
+        return nueva;
     }
     
     public E removeFirst(){

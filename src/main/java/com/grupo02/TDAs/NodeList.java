@@ -4,11 +4,14 @@
  */
 package com.grupo02.TDAs;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author robes
  */
-public class NodeList<E> {
+public class NodeList<E> implements Serializable{
     private E content;
     private NodeList<E> next;
     private NodeList<E> previus;
@@ -47,6 +50,22 @@ public class NodeList<E> {
     
     public E getContent(){
         return this.content;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final NodeList<E> other = (NodeList<E>) obj;
+        return Objects.equals(this.content, other.content);
     }
     
     

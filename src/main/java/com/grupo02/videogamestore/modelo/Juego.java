@@ -5,22 +5,44 @@
 package com.grupo02.videogamestore.modelo;
 
 import com.grupo02.TDAs.LinkedList;
-import java.time.LocalDate;
-import java.time.Month;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
  * @author DELL
  */
-public class Juego {
+public class Juego implements Serializable{
     private String titulo;
     private String descripcion;
     private String imagen;
+    private Date lanzamiento;
     private LinkedList<String> capturas = new LinkedList();
-    private LinkedList<String> generos = new LinkedList();
-    private LinkedList<String> desarrolladores = new LinkedList();
-    private LinkedList<Resena> Resenias = new LinkedList();
+    private LinkedList<String> genero = new LinkedList();
+    private LinkedList<String> desarrollador = new LinkedList();
+    private LinkedList<Resena> resenas = new LinkedList();
 
+    public Juego(String titulo, String descripcion, String imagen) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+    }
+
+    @Override
+    public String toString() {
+        return "Juego{" + "titulo=" + titulo + ", lanzamiento=" + lanzamiento + '}';
+    }
+
+    
+    
+    public Date getLanzamiento() {
+        return lanzamiento;
+    }
+
+    public void setLanzamiento(Date lanzamiento) {
+        this.lanzamiento = lanzamiento;
+    }
+    
     public String getTitulo() {
         return titulo;
     }
@@ -53,31 +75,34 @@ public class Juego {
         this.capturas = capturas;
     }
 
-    public LinkedList<String> getGeneros() {
-        return generos;
+    public LinkedList<String> getGenero() {
+        return genero;
     }
 
-    public void setGeneros(LinkedList<String> generos) {
-        this.generos = generos;
+    public void setGenero(LinkedList<String> genero) {
+        this.genero = genero;
     }
 
-    public LinkedList<String> getDesarrolladores() {
-        return desarrolladores;
+    public LinkedList<String> getDesarrollador() {
+        return desarrollador;
     }
 
-    public void setDesarrolladores(LinkedList<String> desarrolladores) {
-        this.desarrolladores = desarrolladores;
+    public void setDesarrollador(LinkedList<String> desarrollador) {
+        this.desarrollador = desarrollador;
     }
 
-    public LinkedList<Resena> getResenias() {
-        return Resenias;
+    public LinkedList<Resena> getResenas() {
+        return resenas;
     }
 
-    public void setResenias(LinkedList<Resena> Resenias) {
-        this.Resenias = Resenias;
+    public void setResenas(LinkedList<Resena> resenas) {
+        this.resenas = resenas;
     }
 
     
+    
+    
+}
     
 //    public Juego(String titulo, String descripcion, String imagen, String captura, LinkedList<String> genero, String desarrollador, LinkedList<Resena> Resenia) {
 //        this.titulo = titulo;
@@ -231,19 +256,7 @@ public class Juego {
 //        
 //    }
 
-    public Juego(String titulo, String descripcion, String imagen) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.imagen = imagen;
-    }
-
-    @Override
-    public String toString() {
-        return "Juego{" + "titulo=" + titulo + ", descripcion=" + descripcion + '}';
-    }
+   
     
     
     
-    
-    
-}

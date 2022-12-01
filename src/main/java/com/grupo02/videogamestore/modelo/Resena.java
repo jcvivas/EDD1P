@@ -4,13 +4,14 @@
  */
 package com.grupo02.videogamestore.modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author robes
  */
-public class Resena {
+public class Resena implements Serializable{
     private int calificacion;
     private String critico;
     private String mensaje;

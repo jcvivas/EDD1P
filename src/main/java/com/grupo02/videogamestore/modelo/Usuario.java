@@ -4,11 +4,13 @@
  */
 package com.grupo02.videogamestore.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author IMPORTSOLUTION
  */
-public class Usuario {
+public class Usuario implements Serializable{
 
     private String usuario;
     private String contraseña;
