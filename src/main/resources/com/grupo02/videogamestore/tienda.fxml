@@ -12,19 +12,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="889.0" prefWidth="1063.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.TiendaController">
+<VBox alignment="CENTER" prefHeight="931.0" prefWidth="1125.0" spacing="30.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.TiendaController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
     </padding>
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="59.0" prefWidth="1023.0">
          <children>
             <ImageView fitHeight="58.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../imagenes/EDD.png" />
                </image>
             </ImageView>
-            <Label text="VIDEOGAME STORE">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="204.0" text="VIDEOGAME STORE" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Insets left="50.0" top="15.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVideojuego" text="Buscar">
+            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVideojuego" prefHeight="25.0" prefWidth="100.0" text="Buscar">
                <HBox.margin>
                   <Insets left="15.0" top="15.0" />
                </HBox.margin>
@@ -52,18 +52,21 @@
                   <Insets left="20.0" top="15.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnCambiarUsuario" mnemonicParsing="false" onAction="#cambiarUsuario" text="Cerrar sesión">
+            <Button fx:id="btnCambiarUsuario" mnemonicParsing="false" onAction="#cambiarUsuario" prefHeight="25.0" prefWidth="118.0" text="Cerrar sesión">
                <HBox.margin>
                   <Insets left="40.0" top="15.0" />
                </HBox.margin></Button>
          </children>
       </HBox>
-      <VBox prefHeight="317.0" prefWidth="1023.0" spacing="10.0">
+      <VBox fx:id="vboxPrincipal" alignment="CENTER" prefHeight="438.0" prefWidth="1023.0" spacing="20.0">
          <children>
-            <FlowPane fx:id="fpTienda" prefHeight="200.0" prefWidth="200.0" />
+            <FlowPane fx:id="fpTienda" alignment="CENTER" columnHalignment="CENTER" hgap="100.0" prefHeight="410.0" prefWidth="1023.0" vgap="20.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></FlowPane>
          </children>
       </VBox>
-      <VBox prefHeight="247.0" prefWidth="1023.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="247.0" prefWidth="1023.0" spacing="20.0">
          <children>
             <HBox prefHeight="32.0" prefWidth="473.0" spacing="20.0">
                <children>
@@ -74,7 +77,10 @@
                   </Label>
                   <ComboBox fx:id="cbxCategorías" prefHeight="27.0" prefWidth="227.0" promptText="Todas las categrías" />
                </children></HBox>
-            <HBox fx:id="hboxCategorías" prefHeight="170.0" prefWidth="1023.0" />
+            <HBox fx:id="hboxCategorías" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="170.0" prefWidth="1023.0" spacing="20.0">
+               <children>
+                  <HBox fx:id="juegosCategorías" alignment="CENTER" prefHeight="170.0" prefWidth="767.0" spacing="30.0" />
+               </children></HBox>
          </children>
       </VBox>
    </children>
