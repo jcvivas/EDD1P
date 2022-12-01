@@ -27,6 +27,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TiendaController implements Initializable {
@@ -36,38 +37,39 @@ public class TiendaController implements Initializable {
      */
     @FXML
     private Button btnCambiarUsuario;
-    
+
     @FXML
     private FlowPane fpTienda;
-    
+
     @FXML
     private Button btnBuscar;
-    
+
     @FXML
     private TextField txtBuscador;
 
     @FXML
-    private HBox hboxPrincipales;
+    private VBox vboxPrincipal;
 
     @FXML
     private HBox hboxCategorías;
-
-    @FXML
-    private HBox hbox1Top10;
-
-    @FXML
-    private HBox hbox2Top10;
     
+    @FXML
+    private HBox juegosCategorías;
+
     public static String textoaBuscar;
+
     @FXML
     private HBox hboxCabeza;
+
     @FXML
     private Button btnAdelante;
+
     @FXML
     private Button btnAtras;
+
     @FXML
     private ComboBox<?> cbxCategorías;
-    
+
     private static DoublyCircularLinkedList<Juego> listaJuegos;
 
     @Override
@@ -76,15 +78,18 @@ public class TiendaController implements Initializable {
         cargarPrinciapal();
         //Reader.leerJuegos("games_data.csv");
     }
-    
-    public static VBox cargarJuego(Juego j, int largo,int ancho) {//LUIS
+
+    public static VBox cargarJuego(Juego j, int largo, int ancho) {//LUIS
         VBox vbx = new VBox();
-        vbx.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), largo, ancho), new Label(j.getTitulo()));
+        Label l = new Label(j.getTitulo());
+        l.setFont(Font.font("Verdana", 15));
+        l.setWrapText(true);
+        l.setPrefWidth(ancho);
+        vbx.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), largo, ancho), l);
         vbx.setOnMouseClicked(mc -> cargarDetalleJuego(j));
         return vbx;
     }
-    
-    
+
     public static void cargarDetalleJuego(Juego j) { //LUIS
         Stage stage = new Stage();
         VBox root = new VBox();
@@ -105,62 +110,61 @@ public class TiendaController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
-    private static void mostraBotones(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
+
+    private static void mostraBotones(Pane pJuegos, Pane pExterior, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
 
         Button btn2 = new Button("SIGUIENTE");
         Button btn1 = new Button("ATRÁS");
-        p.addEventHandler(MouseEvent.MOUSE_ENTERED, me -> {
-            p.getChildren().add(1, btn2);
-            p.getChildren().add(0, btn1);
+        pExterior.addEventHandler(MouseEvent.MOUSE_ENTERED, me -> {
+            pExterior.getChildren().add(1, btn2);
+            pExterior.getChildren().add(0, btn1);
         });
         btn1.setOnAction(acte -> {
-            mostrarAnteriores(p,mostrados, originales, largo, ancho);
+            mostrarAnteriores(pJuegos, mostrados, originales, largo, ancho);
         });
         btn2.setOnAction(acte -> {
-            mostrarSiguientes(p,mostrados,originales,largo, ancho);
+            mostrarSiguientes(pJuegos, mostrados, originales, largo, ancho);
         });
     }
 //
-    private static void eliminarBotones(Pane p) {
-        p.addEventHandler(MouseEvent.MOUSE_EXITED, me -> {
-            p.getChildren().remove(2);
-            p.getChildren().remove(0);
+
+    private static void eliminarBotones(Pane pExterior) {
+        pExterior.addEventHandler(MouseEvent.MOUSE_EXITED, me -> {
+            pExterior.getChildren().remove(2);
+            pExterior.getChildren().remove(0);
         });
     }
 
-    
-    private static void renderizarJuegos(DoublyCircularLinkedList<Juego> juegos, Pane p, int largo, int ancho){
-        for(Juego j:juegos){
+    private static void renderizarJuegos(DoublyCircularLinkedList<Juego> juegos, Pane p, int largo, int ancho) {
+        for (Juego j : juegos) {
             p.getChildren().add(cargarJuego(j, largo, ancho));
         }
     }
-    
-    private static void mostrarSiguientes(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales,int largo, int ancho){
+
+    private static void mostrarSiguientes(Pane p, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
         p.getChildren().clear();
-        
-        NodeList<Juego> tempF =   originales.getNode(mostrados.getLast().getContent());
+        NodeList<Juego> tempF = originales.getNode(mostrados.getLast().getContent());
         int size = mostrados.size();
-        for (int x = 0; x < size; x++){
+        for (int x = 0; x < size; x++) {
             tempF = tempF.getNext();
             mostrados.addLast(tempF.getContent());
             mostrados.removeFirst();
         }
-        renderizarJuegos(mostrados,p,largo,ancho);
-        
+        renderizarJuegos(mostrados, p, largo, ancho);
+
     }
-    
-    public static void mostrarAnteriores(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales,int largo, int ancho){
+
+    public static void mostrarAnteriores(Pane p, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
         p.getChildren().clear();
-        NodeList<Juego> tempF =   originales.getNode(mostrados.getFirst().getContent());
+        NodeList<Juego> tempF = originales.getNode(mostrados.getFirst().getContent());
         int size = mostrados.size();
-        for (int x = 0; x < size; x++){
+        for (int x = 0; x < size; x++) {
             tempF = tempF.getPrevius();
             mostrados.addFirst(tempF.getContent());
             mostrados.removeLast();
         }
-        renderizarJuegos(mostrados,p,largo,ancho);
-    }    
+        renderizarJuegos(mostrados, p, largo, ancho);
+    }
 
     @FXML
     private void cambiarUsuario() throws IOException {
@@ -176,26 +180,24 @@ public class TiendaController implements Initializable {
 
     @FXML
     private void buscarVideojuego() throws IOException {
-        if (!txtBuscador.getText().isBlank()){
+        if (!txtBuscador.getText().isBlank()) {
             textoaBuscar = txtBuscador.getText();
             FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("buscar.fxml"));
             Parent root = fxmLoader.load();
             btnBuscar.getScene().setRoot(root);
         }
     }
-    
-    private static void cargarJuegos(DoublyCircularLinkedList<Juego> originales,int cantidadJuegos,Pane p, int largo, int ancho) {
+
+    private static void cargarJuegos(DoublyCircularLinkedList<Juego> originales, int cantidadJuegos, Pane pJuegos, Pane pExterior, int largo, int ancho) {
         DoublyCircularLinkedList<Juego> mostrados = Reader.inicializarLista(originales, cantidadJuegos);
-        renderizarJuegos(mostrados,p, largo, ancho);
-        mostraBotones((Pane)p.getParent(), mostrados,originales,105,230);
-        eliminarBotones((Pane)p.getParent());
+        renderizarJuegos(mostrados, pJuegos, largo, ancho);
+        mostraBotones(pJuegos, pExterior, mostrados, originales, 105, 230);
+        eliminarBotones(pExterior);
     }
-    
-    private void cargarPrinciapal(){
-        cargarJuegos(listaJuegos,6,fpTienda,105,230);
-        fpTienda.setAlignment(Pos.CENTER);
-        fpTienda.setHgap(50);
-        fpTienda.setVgap(50);
+
+    private void cargarPrinciapal() {
+        cargarJuegos(listaJuegos, 6, fpTienda, vboxPrincipal, 105, 230);
+        cargarJuegos(listaJuegos, 3, juegosCategorías, hboxCategorías, 75, 200);
     }
-    
+
 }
