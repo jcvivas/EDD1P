@@ -77,9 +77,9 @@ public class TiendaController implements Initializable {
         //Reader.leerJuegos("games_data.csv");
     }
     
-    public static VBox cargarJuego(Juego j) {//LUIS
+    public static VBox cargarJuego(Juego j, int largo,int ancho) {//LUIS
         VBox vbx = new VBox();
-        vbx.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), 150, 200), new Label(j.getTitulo()));
+        vbx.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), largo, ancho), new Label(j.getTitulo()));
         vbx.setOnMouseClicked(mc -> cargarDetalleJuego(j));
         return vbx;
     }
@@ -88,7 +88,7 @@ public class TiendaController implements Initializable {
     public static void cargarDetalleJuego(Juego j) { //LUIS
         Stage stage = new Stage();
         VBox root = new VBox();
-        Scene scene = new Scene(root, 250, 355);
+        Scene scene = new Scene(root, 880, 520);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(0, 10, 0, 10));
         VBox datos = new VBox();
@@ -101,12 +101,12 @@ public class TiendaController implements Initializable {
         datos.setAlignment(Pos.CENTER);
         datos.setStyle("-fx-background-color:#86b5fc");
         root.setSpacing(20);
-        root.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), 100, 150), datos);
+        root.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), 180, 320), datos);
         stage.setScene(scene);
         stage.show();
     }
     
-    private static void mostraBotones(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales) {
+    private static void mostraBotones(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
 
         Button btn2 = new Button("SIGUIENTE");
         Button btn1 = new Button("ATRÁS");
@@ -115,10 +115,10 @@ public class TiendaController implements Initializable {
             p.getChildren().add(0, btn1);
         });
         btn1.setOnAction(acte -> {
-            mostrarAnteriores(p,mostrados, originales);
+            mostrarAnteriores(p,mostrados, originales, largo, ancho);
         });
         btn2.setOnAction(acte -> {
-            mostrarSiguientes(p,mostrados,originales);
+            mostrarSiguientes(p,mostrados,originales,largo, ancho);
         });
     }
 //
@@ -130,13 +130,13 @@ public class TiendaController implements Initializable {
     }
 
     
-    private static void renderizarJuegos(DoublyCircularLinkedList<Juego> juegos, Pane p){
+    private static void renderizarJuegos(DoublyCircularLinkedList<Juego> juegos, Pane p, int largo, int ancho){
         for(Juego j:juegos){
-            p.getChildren().add(cargarJuego(j));
+            p.getChildren().add(cargarJuego(j, largo, ancho));
         }
     }
     
-    private static void mostrarSiguientes(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales){
+    private static void mostrarSiguientes(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales,int largo, int ancho){
         p.getChildren().clear();
         
         NodeList<Juego> tempF =   originales.getNode(mostrados.getLast().getContent());
@@ -146,11 +146,11 @@ public class TiendaController implements Initializable {
             mostrados.addLast(tempF.getContent());
             mostrados.removeFirst();
         }
-        renderizarJuegos(mostrados,p);
+        renderizarJuegos(mostrados,p,largo,ancho);
         
     }
     
-    public static void mostrarAnteriores(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales){
+    public static void mostrarAnteriores(Pane p, DoublyCircularLinkedList<Juego> mostrados,DoublyCircularLinkedList<Juego> originales,int largo, int ancho){
         p.getChildren().clear();
         NodeList<Juego> tempF =   originales.getNode(mostrados.getFirst().getContent());
         int size = mostrados.size();
@@ -159,7 +159,7 @@ public class TiendaController implements Initializable {
             mostrados.addFirst(tempF.getContent());
             mostrados.removeLast();
         }
-        renderizarJuegos(mostrados,p);
+        renderizarJuegos(mostrados,p,largo,ancho);
     }    
 
     @FXML
@@ -184,18 +184,18 @@ public class TiendaController implements Initializable {
         }
     }
     
-    private static void cargarJuegos(DoublyCircularLinkedList<Juego> originales,int cantidadJuegos,Pane p) {
+    private static void cargarJuegos(DoublyCircularLinkedList<Juego> originales,int cantidadJuegos,Pane p, int largo, int ancho) {
         DoublyCircularLinkedList<Juego> mostrados = Reader.inicializarLista(originales, cantidadJuegos);
-        renderizarJuegos(mostrados,p);
-        mostraBotones((Pane)p.getParent(), mostrados,originales);
+        renderizarJuegos(mostrados,p, largo, ancho);
+        mostraBotones((Pane)p.getParent(), mostrados,originales,105,230);
         eliminarBotones((Pane)p.getParent());
-//        flwpnPrinciaples.setAlignment(Pos.CENTER);
-//        flwpnPrinciaples.setHgap(100);
-//        flwpnPrinciaples.setVgap(100);
     }
     
     private void cargarPrinciapal(){
-        cargarJuegos(listaJuegos,6,fpTienda);
+        cargarJuegos(listaJuegos,6,fpTienda,105,230);
+        fpTienda.setAlignment(Pos.CENTER);
+        fpTienda.setHgap(50);
+        fpTienda.setVgap(50);
     }
     
 }
