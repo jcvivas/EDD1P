@@ -36,12 +36,8 @@
                   <Insets left="15.0" top="15.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Tus Juegos">
-               <HBox.margin>
-                  <Insets left="100.0" top="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Lista de deseos">
+            <ImageView fitHeight="45.0" fitWidth="526.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="btnwishList" mnemonicParsing="false" onAction="#cambiarWishlist" prefHeight="25.0" prefWidth="137.0" text="Lista de deseos">
                <HBox.margin>
                   <Insets left="20.0" top="15.0" />
                </HBox.margin>

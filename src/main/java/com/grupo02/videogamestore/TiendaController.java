@@ -47,6 +47,9 @@ public class TiendaController implements Initializable {
      */
     @FXML
     private Button btnCambiarUsuario;
+    
+    @FXML
+    private Button btnwishList;
 
     @FXML
     private FlowPane fpTienda;
@@ -76,6 +79,8 @@ public class TiendaController implements Initializable {
     public static DoublyCircularLinkedList<Juego> listaJuegos;
     public static HashSet<String> generos;
     public static HashSet<String> desarrolladoras;
+    
+    public static DoublyCircularLinkedList<Juego> wishlist = new DoublyCircularLinkedList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -254,7 +259,7 @@ public class TiendaController implements Initializable {
         contenido.setSpacing(15);
         HBox top = new HBox();
         Button whishlistButton = new Button("Agregar a mi lista de deseos");
-//        whishlistButton.setOnAction(acte -> agregaraWishList(j));
+        whishlistButton.setOnAction(acte -> agregaraWishList(j));
         top.getChildren().add(whishlistButton);
         top.setPadding(new Insets(10, 10, 10, 10));
         top.setAlignment(Pos.CENTER_RIGHT);
@@ -265,11 +270,19 @@ public class TiendaController implements Initializable {
         stage.show();
     }
 
-//    private static void agregaraWishList(Juego j) {
-//        if ((wishlist.isEmpty()) || (!wishlist.contains(j))) {
-//            wishlist.addLast(j);
-//        }
-//    }
+    private static void agregaraWishList(Juego j) {
+        if ((wishlist.isEmpty()) || (!wishlist.contains(j))) {
+            wishlist.addLast(j);
+        }
+    }
+    
+    @FXML
+    private void cambiarWishlist() throws IOException {
+        FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("wishlist.fxml"));
+        Parent root = fxmLoader.load();
+        btnwishList.getScene().setRoot(root);
+    }
+    
     private static void mostraBotones(Pane pJuegos, Pane pExterior, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
 
         Button btn2 = new Button("SIGUIENTE");
