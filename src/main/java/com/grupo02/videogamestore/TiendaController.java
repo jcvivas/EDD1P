@@ -78,19 +78,13 @@ public class TiendaController implements Initializable {
     public static HashSet<String> generos;
     public static HashSet<String> desarrolladoras;
     
-    private static LinkedList<Resena> resenas = new LinkedList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        resenas.addFirst(new Resena(App.fileImage + "user.png", 5, "QUE BUENO", new Date(2022)));
-        resenas.addFirst(new Resena(App.fileImage + "user.png", 2, "QUE MALO", new Date(2022)));
-        resenas.addFirst(new Resena(App.fileImage + "user.png", 3, "ESTUVO REGULAR", new Date(2022)));
-        resenas.addFirst(new Resena(App.fileImage + "user.png", 5, "ME LO COMPRARÉ", new Date(2022)));
-        resenas.addFirst(new Resena(App.fileImage + "user.png", 1, "NO GASTEN SU DINERO EN ESTO", new Date(2022)));
+        //Reader.leerJuegos("games_data.csv");
         listaJuegos = Reader.cargarJuegos("games_data.bin");
         cargarPrinciapal();
         cbxCategorias.getItems().addAll(Reader.generos);
-        //Reader.leerJuegos("games_data.csv");
     }
     
     @FXML
@@ -143,19 +137,13 @@ public class TiendaController implements Initializable {
         lbldes.setFont(Font.font("Verdana", 20));
         lbldes.setWrapText(true);
         Label lbldev = new Label();
-        String textodev = "Desarrolladores: ";
-        for (String dev : j.getDesarrollador()) {
-            textodev = textodev + " - " + dev;
-        }
+        String textodev = "Desarrolladores: "+ j.getDesarrollador().toString();
         lbldev.setPrefWidth(400);
         lbldev.setText(textodev);
         lbldev.setFont(Font.font("Verdana", 10));
         lbldev.setWrapText(true);
         Label lblgenero = new Label();
-        String textogenero = "Géneros:";
-        for (String genero : j.getGenero()) {
-            textogenero = textogenero + " - " + genero;
-        }
+        String textogenero = "Géneros:" + j.getGenero().toString();
         lblgenero.setPrefWidth(400);
         lblgenero.setText(textogenero);
         lblgenero.setFont(Font.font("Verdana", 10));
@@ -185,7 +173,7 @@ public class TiendaController implements Initializable {
         Separator sh = new Separator(Orientation.HORIZONTAL);
         sh.setPrefWidth(15);
         VBox reseñasBox = new VBox();//caja de reseñas y carga una por una todo lo que viene debajo
-        for (Resena r : resenas) {
+        for (Resena r : j.getResenas()) {
             HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
             VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
             HBox cabeceradescripción = new HBox();//estrellas y la fecha

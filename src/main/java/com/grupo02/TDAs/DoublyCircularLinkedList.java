@@ -17,8 +17,23 @@ import java.util.Set;
 public class DoublyCircularLinkedList<E> implements List<E> {
 
     private NodeList<E> head;
-    
-    
+
+    public boolean remove(E content) {
+        if (this.isEmpty()) {
+            return false;
+        }
+        NodeList<E> deleted = this.getNode(content);
+        if (deleted != null) {
+            NodeList<E> next = deleted.getNext();
+            NodeList<E> last = deleted.getPrevius();
+            next.setPrevius(last);
+            last.setNext(next);
+            deleted = null;
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public int size() {
         int cont = 0;
@@ -56,7 +71,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
     public NodeList<E> getFirst() {
         return head;
     }
-    
+
     @Override
     public boolean isEmpty() {
         return this.head == null;
@@ -88,18 +103,18 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         return true;
     }
 
-    
-    
-    public NodeList<E> getLast(){
+    public NodeList<E> getLast() {
         return head.getPrevius();
     }
-    
+
     @Override
     public Iterator<E> iterator() {
         int size = this.size();
         Iterator<E> it = new Iterator<E>() {
             int i = 0;
-            private NodeList<E> cursor = head;;
+            private NodeList<E> cursor = head;
+
+            ;
             @Override
             public boolean hasNext() {
                 return i++ < size;
@@ -115,8 +130,8 @@ public class DoublyCircularLinkedList<E> implements List<E> {
 
         return it;
     }
-    
-    public E removeLast(){
+
+    public E removeLast() {
         NodeList<E> temp = null;
         if (this.isEmpty()) {
             return null;
@@ -127,10 +142,10 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         tempL.setPrevius(tempP);
         tempP.setNext(tempL);
         return temp.getContent();
-        
+
     }
-    
-    public NodeList<E> getNode(E element){
+
+    public NodeList<E> getNode(E element) {
         NodeList<E> nodeBuscar = new NodeList<E>(element);
         if (nodeBuscar.equals(head)) {
             return head;
@@ -142,10 +157,8 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return null;
     }
-    
-    
-    
-    public DoublyCircularLinkedList<E> subList(int pos){
+
+    public DoublyCircularLinkedList<E> subList(int pos) {
         DoublyCircularLinkedList<E> nueva = new DoublyCircularLinkedList();
         NodeList<E> temp = this.getFirst();
         for (int i = 0; i < pos; i++) {
@@ -154,8 +167,8 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return nueva;
     }
-    
-    public E removeFirst(){
+
+    public E removeFirst() {
         NodeList<E> temp = null;
         if (this.isEmpty()) {
             return null;
@@ -168,8 +181,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         this.head = tempL;
         return temp.getContent();
     }
-    
-    
+
     @Override
     public DoublyCircularLinkedList<E> findAll(E element, Comparator<E> cmp) {
         DoublyCircularLinkedList<E> result = new DoublyCircularLinkedList();
@@ -180,17 +192,17 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return result;
     }
-    
+
     @Override
-    public boolean contains(E element){
-        for (E eCompare: this){
-            if (element.equals(eCompare)){
+    public boolean contains(E element) {
+        for (E eCompare : this) {
+            if (element.equals(eCompare)) {
                 return true;
             }
         }
         return false;
     }
-        
+
     public Set<E> findAllSet(E element, Comparator<E> cmp) {
         Set<E> result = new HashSet();
         for (E eCompare : this) {
@@ -200,7 +212,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return result;
     }
-    
+
     @Override
     public DoublyCircularLinkedList<E> findLower(E element, Comparator<E> cmp) {
 

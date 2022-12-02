@@ -52,6 +52,29 @@ public class LinkedList<E> implements List<E> {
         return false;
     }
 
+    
+    public NodeList<E> getNode(E element) {
+        NodeList<E> nodeBuscar = new NodeList<E>(element);
+        if (this.isEmpty()) {
+            return null;
+        }
+        if (element==null) {
+            return null;
+        }
+        if (nodeBuscar.equals(head)) {
+            return head;
+        }
+        
+        if (nodeBuscar.equals(tail));
+        
+        for (NodeList<E> encontrado = head.getNext(); encontrado != null; encontrado = encontrado.getNext()) {
+            if (encontrado.equals(nodeBuscar)) {
+                return encontrado;
+            }
+        }
+        return null;
+    }
+    
     @Override
     public boolean addFirst(E e) {
         if (this.isEmpty()) {
@@ -151,6 +174,19 @@ public class LinkedList<E> implements List<E> {
             }
         }
         return result;
+    }
+    
+    @Override
+    public String toString(){
+        String content = "";
+        if (!this.isEmpty()) {
+            content+=this.getFirst().getContent();
+        }
+        
+        for (NodeList<E> temp = this.getFirst().getNext(); temp!=null; temp=temp.getNext()){
+            content+= "-" + temp.getContent();
+        }
+        return content;
     }
 
 }

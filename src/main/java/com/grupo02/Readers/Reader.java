@@ -8,6 +8,7 @@ import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.LinkedList;
 import com.grupo02.videogamestore.App;
 import com.grupo02.videogamestore.modelo.Juego;
+import com.grupo02.videogamestore.modelo.Resena;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,7 +52,7 @@ public class Reader {
             while ((linea = bf.readLine()) != null) {
                 lineas.addLast(linea);
                 cont++;
-                if (cont == 25) {
+                if (cont == 20) {
                     break;
                 }
             }
@@ -121,9 +122,7 @@ public class Reader {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        System.out.println("Done");
-        
+        }        
         
         return name;
     }
@@ -175,6 +174,22 @@ public class Reader {
                         juego.getGenero().addLast(genres);
                     }
                     
+                    try {
+                        String[] resenias = p[10].split("\\=");
+                        for (String re:resenias){
+                            String[] datosresena = re.split("\\;");
+                            int puntos = Integer.parseInt(datosresena[0]);
+                            String name = datosresena[1];
+                            String opinion = datosresena[2];
+                            Date coment = sdf.parse(datosresena[3]);
+                            Resena r = new Resena(name,puntos,opinion,coment);
+                            juego.getResenas().addFirst(r);
+                        }
+                    }catch(Exception e){
+                        System.out.println("Erros");
+                    }
+                    
+                        System.out.println("Juego agregado");
                     juegos.addLast(juego);
                 } catch (ParseException ex) {
                     ex.printStackTrace();
@@ -188,6 +203,7 @@ public class Reader {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("JUEGOS AGREGADOS CON EXITO");
         
     }
     
@@ -197,4 +213,22 @@ public class Reader {
         }
         return juegos.subList(valor);
     }
+    
+//    public static LinkedList<Usuario> cargarUsuarios(String archivo){
+//        DoublyCircularLinkedList<Usuario> juego = null;
+//        try ( ObjectInputStream oos = new ObjectInputStream(new FileInputStream(App.filePath+archivo))) {
+//            juego = (DoublyCircularLinkedList<Juego>) oos.readObject();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return juego;
+//    }
+//    
+//    public static void guardarDatosUsuarios(LinkedList<Usuario> usuarios, String archivo){
+//        try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(App.filePath+archivo))) {
+//            oos.writeObject(usuarios);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 }
