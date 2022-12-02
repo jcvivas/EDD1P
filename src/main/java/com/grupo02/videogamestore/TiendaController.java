@@ -4,9 +4,7 @@ import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.NodeList;
 import com.grupo02.Readers.Reader;
 import com.grupo02.TDAs.LinkedList;
-import com.grupo02.comparators.ByGenre;
-import com.grupo02.comparators.ByName;
-import com.grupo02.comparators.ByYear;
+import com.grupo02.comparators.*;
 import com.grupo02.videogamestore.modelo.Juego;
 import com.grupo02.videogamestore.modelo.Resena;
 import java.io.FileInputStream;
@@ -14,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.event.ActionEvent;
@@ -85,10 +84,10 @@ public class TiendaController implements Initializable {
         cargarPrinciapal();
         cbxCategorias.getItems().addAll(Reader.generos);
     }
-    
+
     @FXML
-    public void cargarCategorias() throws IOException{
-        if(vboxP.getChildren().size()==2){
+    public void cargarCategorias() throws IOException {
+        if (vboxP.getChildren().size() == 2) {
             vboxP.getChildren().remove(1);
         }
         HBox paneCategoria = new HBox();
@@ -101,11 +100,9 @@ public class TiendaController implements Initializable {
         Juego jBuscar = new Juego("");
         String cat = cbxCategorias.getValue();
         jBuscar.getGenero().addFirst(cat);
-        
+
         DoublyCircularLinkedList<Juego> mostrar = listaJuegos.findAll(jBuscar, new ByGenre());
         TiendaController.cargarJuegos(mostrar, 3, hboxCategoria, paneCategoria, 75, 200);
-            
-        
 
     }
 
@@ -118,6 +115,23 @@ public class TiendaController implements Initializable {
         vbx.getChildren().addAll(Reader.obtenerImagen(j.getImagen(), largo, ancho), l);
         vbx.setOnMouseClicked(mc -> cargarDetalleJuego(j));
         return vbx;
+    }
+
+    public static void renderizarResenas(VBox paneResenas, Resena r) {
+        HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
+        VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
+        HBox cabeceradescripción = new HBox();//estrellas y la fecha
+        cabeceradescripción.getChildren().add(new Label(r.getFecha().toString()));
+        for (int x = 1; x <= r.getCalificacion(); x++) {
+            cabeceradescripción.getChildren().add(Reader.obtenerImagen("estrella.png", 15, 15));
+        }
+        cabeceradescripción.setSpacing(5);
+        descripcionBox.getChildren().addAll(cabeceradescripción, new Label(r.getMensaje()));
+        descripcionBox.setPadding(new Insets(5, 5, 5, 5));
+        reseña.getChildren().addAll(Reader.obtenerImagen("user.png", 25, 25), descripcionBox);
+        reseña.setStyle("-fx-background-color:#EEECFF");
+        reseña.setPadding(new Insets(5, 5, 5, 5));
+        paneResenas.getChildren().add(reseña);
     }
 
     public static void cargarDetalleJuego(Juego j) { //LUIS
@@ -136,7 +150,7 @@ public class TiendaController implements Initializable {
         lbldes.setFont(Font.font("Verdana", 20));
         lbldes.setWrapText(true);
         Label lbldev = new Label();
-        String textodev = "Desarrolladores: "+ j.getDesarrollador().toString();
+        String textodev = "Desarrolladores: " + j.getDesarrollador().toString();
         lbldev.setPrefWidth(400);
         lbldev.setText(textodev);
         lbldev.setFont(Font.font("Verdana", 10));
@@ -180,22 +194,61 @@ public class TiendaController implements Initializable {
         cabeceraReseñas.getChildren().addAll(lblr, cbxReseña);
         cabeceraReseñas.setSpacing(20);
         reseñasBox.getChildren().add(cabeceraReseñas);
+        VBox contenedorResenas = new VBox();
         for (Resena r : j.getResenas()) {
-            HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
-            VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
-            HBox cabeceradescripción = new HBox();//estrellas y la fecha
-            cabeceradescripción.getChildren().add(new Label(r.getFecha().toString()));
-            for (int x = 1; x <= r.getCalificacion(); x++) {
-                cabeceradescripción.getChildren().add(Reader.obtenerImagen("estrella.png", 15, 15));
-            }
-            cabeceradescripción.setSpacing(5);
-            descripcionBox.getChildren().addAll(cabeceradescripción, new Label(r.getMensaje()));
-            descripcionBox.setPadding(new Insets(5, 5, 5, 5));
-            reseña.getChildren().addAll(Reader.obtenerImagen("user.png", 25, 25), descripcionBox);
-            reseña.setStyle("-fx-background-color:#EEECFF");
-            reseña.setPadding(new Insets(5, 5, 5, 5));
-            reseñasBox.getChildren().add(reseña);
+            renderizarResenas(contenedorResenas, r);
         }
+        reseñasBox.getChildren().add(contenedorResenas);
+        cbxReseña.setOnAction(eh -> {
+            
+            LinkedList<Resena> resenasMostrar = j.getResenas();
+            PriorityQueue<Resena> resenasOrdenadas = null;
+            String vc = cbxReseña.getValue();
+            contenedorResenas.getChildren().clear();
+            if (vc.equals("Reseñas antiguas")) {
+                resenasOrdenadas = new PriorityQueue<Resena>((o1, o2) -> {
+                    if (o1.getFecha().getYear() - o2.getFecha().getYear() != 0) {
+                        return o1.getFecha().getYear() - o2.getFecha().getYear();
+                    }
+                    if (o1.getFecha().getMonth() - o2.getFecha().getMonth() != 0) {
+                        return o1.getFecha().getMonth() - o2.getFecha().getMonth();
+                    }
+                    return o1.getFecha().getDay() - o2.getFecha().getDay();
+
+                });
+            } else if (vc.equals("Reseñas recientes")) {
+                resenasOrdenadas = new PriorityQueue<Resena>((o1, o2) -> {
+                    Resena temp = o1;
+                    o1 = o2;
+                    o2 = temp;
+                    if (o1.getFecha().getYear() - o2.getFecha().getYear() != 0) {
+                        return o1.getFecha().getYear() - o2.getFecha().getYear();
+                    }
+                    if (o1.getFecha().getMonth() - o2.getFecha().getMonth() != 0) {
+                        return o1.getFecha().getMonth() - o2.getFecha().getMonth();
+                    }
+                    return o1.getFecha().getDay() - o2.getFecha().getDay();
+                });
+            } else if (vc.equals("Puntuación de menor a mayor")) {
+                resenasOrdenadas = new PriorityQueue<Resena>((o1, o2) -> {
+                    return o1.getCalificacion() - o2.getCalificacion();
+
+                });
+            }
+            else if (vc.equals("Puntucación de mayor a menor")) {
+                resenasOrdenadas = new PriorityQueue<Resena>((o1, o2) -> {
+                    return o2.getCalificacion() - o1.getCalificacion();
+                });
+            }
+            for (Resena r: resenasMostrar){
+                resenasOrdenadas.offer(r);
+            }
+            for (Resena r = resenasOrdenadas.poll(); r != null ; r = resenasOrdenadas.poll()) {
+                renderizarResenas(contenedorResenas,r);
+            }
+
+        });
+
         reseñasBox.setAlignment(Pos.CENTER_LEFT);
         reseñasBox.setSpacing(15);
         contenido.setSpacing(15);
@@ -211,13 +264,12 @@ public class TiendaController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
 //    private static void agregaraWishList(Juego j) {
 //        if ((wishlist.isEmpty()) || (!wishlist.contains(j))) {
 //            wishlist.addLast(j);
 //        }
 //    }
-
     private static void mostraBotones(Pane pJuegos, Pane pExterior, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
 
         Button btn2 = new Button("SIGUIENTE");
@@ -295,7 +347,7 @@ public class TiendaController implements Initializable {
     }
 
     public static void cargarJuegos(DoublyCircularLinkedList<Juego> originales, int cantidadJuegos, Pane pJuegos, Pane pExterior, int largo, int ancho) {
-        
+
         DoublyCircularLinkedList<Juego> mostrados = Reader.inicializarLista(originales, cantidadJuegos);
         renderizarJuegos(mostrados, pJuegos, largo, ancho);
         mostraBotones(pJuegos, pExterior, mostrados, originales, largo, ancho);
