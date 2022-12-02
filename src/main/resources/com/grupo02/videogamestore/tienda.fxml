@@ -36,16 +36,11 @@
                   <Insets left="15.0" top="15.0" />
                </HBox.margin>
             </Button>
-            <ImageView fitHeight="45.0" fitWidth="526.0" pickOnBounds="true" preserveRatio="true" />
             <Button fx:id="btnwishList" mnemonicParsing="false" onAction="#cambiarWishlist" prefHeight="25.0" prefWidth="137.0" text="Lista de deseos">
                <HBox.margin>
                   <Insets left="20.0" top="15.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnCambiarUsuario" mnemonicParsing="false" onAction="#cambiarUsuario" prefHeight="25.0" prefWidth="118.0" text="Cerrar sesión">
-               <HBox.margin>
-                  <Insets left="40.0" top="15.0" />
-               </HBox.margin></Button>
          </children>
       </HBox>
       <VBox fx:id="vboxPrincipal" alignment="CENTER" prefHeight="438.0" prefWidth="1023.0" spacing="20.0">

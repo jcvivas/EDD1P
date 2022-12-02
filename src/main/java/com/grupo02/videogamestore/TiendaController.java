@@ -7,6 +7,7 @@ import com.grupo02.TDAs.LinkedList;
 import com.grupo02.comparators.*;
 import com.grupo02.videogamestore.modelo.Juego;
 import com.grupo02.videogamestore.modelo.Resena;
+import com.grupo02.videogamestore.modelo.Usuario;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -79,8 +80,7 @@ public class TiendaController implements Initializable {
     public static DoublyCircularLinkedList<Juego> listaJuegos;
     public static HashSet<String> generos;
     public static HashSet<String> desarrolladoras;
-    
-    public static DoublyCircularLinkedList<Juego> wishlist = new DoublyCircularLinkedList();
+    public static DoublyCircularLinkedList<Juego> wishlist = InicialController.cuenta.getWishlist();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,6 +88,13 @@ public class TiendaController implements Initializable {
         listaJuegos = Reader.cargarJuegos("games_data.bin");
         cargarPrinciapal();
         cbxCategorias.getItems().addAll(Reader.generos);
+//        Usuario usr1 = new Usuario("luisJ","123",'U');
+//        Usuario usr2 = new Usuario("robtrivi","edd1",'A');
+//        Usuario usr3 = new Usuario("mendesG","444",'U');
+//        usuarios.addLast(usr1);
+//        usuarios.addLast(usr2);
+//        usuarios.addLast(usr3);
+    
     }
 
     @FXML
@@ -273,6 +280,7 @@ public class TiendaController implements Initializable {
     private static void agregaraWishList(Juego j) {
         if ((wishlist.isEmpty()) || (!wishlist.contains(j))) {
             wishlist.addLast(j);
+            Reader.guardarDatosUsuarios(InicialController.getCuentas(),"users.bin");
         }
     }
     

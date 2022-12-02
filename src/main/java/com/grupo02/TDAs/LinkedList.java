@@ -65,7 +65,9 @@ public class LinkedList<E> implements List<E> {
             return head;
         }
         
-        if (nodeBuscar.equals(tail));
+        if (nodeBuscar.equals(tail)){
+            return tail;
+        }
         
         for (NodeList<E> encontrado = head.getNext(); encontrado != null; encontrado = encontrado.getNext()) {
             if (encontrado.equals(nodeBuscar)) {

@@ -9,6 +9,7 @@ import com.grupo02.TDAs.LinkedList;
 import com.grupo02.videogamestore.App;
 import com.grupo02.videogamestore.modelo.Juego;
 import com.grupo02.videogamestore.modelo.Resena;
+import com.grupo02.videogamestore.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -214,21 +215,21 @@ public class Reader {
         return juegos.subList(valor);
     }
     
-//    public static LinkedList<Usuario> cargarUsuarios(String archivo){
-//        DoublyCircularLinkedList<Usuario> juego = null;
-//        try ( ObjectInputStream oos = new ObjectInputStream(new FileInputStream(App.filePath+archivo))) {
-//            juego = (DoublyCircularLinkedList<Juego>) oos.readObject();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return juego;
-//    }
-//    
-//    public static void guardarDatosUsuarios(LinkedList<Usuario> usuarios, String archivo){
-//        try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(App.filePath+archivo))) {
-//            oos.writeObject(usuarios);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    public static LinkedList<Usuario> cargarUsuarios(String archivo){
+        LinkedList<Usuario> usuarios = null;
+        try ( ObjectInputStream oos = new ObjectInputStream(new FileInputStream(App.filePath+archivo))) {
+            usuarios = (LinkedList<Usuario>) oos.readObject();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return usuarios;
+    }
+    
+    public static void guardarDatosUsuarios(LinkedList<Usuario> usuarios, String archivo){
+        try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(App.filePath+archivo))) {
+            oos.writeObject(usuarios);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

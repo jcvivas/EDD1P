@@ -1,5 +1,6 @@
 package com.grupo02.videogamestore;
 
+import com.grupo02.Readers.Reader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -71,12 +72,8 @@ public class RegistrarController implements Initializable {
                 txtUser.clear();
                 txtPsw.clear();
             } else {
-                try ( BufferedWriter bw = new BufferedWriter(new FileWriter(App.filePath + "usuarios.txt", true))) {
-                    bw.write(u.toString() + "\n");
-                    bw.close();
-                } catch (IOException ex) {
-                    System.out.println("error 2");
-                }
+                InicialController.getCuentas().addLast(u);
+                Reader.guardarDatosUsuarios(InicialController.getCuentas(), "users.bin");
                 Stage s = (Stage) btnGuardar.getScene().getWindow();
                 s.close();
                 FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("Inicial.fxml"));
@@ -90,12 +87,6 @@ public class RegistrarController implements Initializable {
     }
 
     private boolean siExiste(Usuario u) {
-        for (Usuario cuenta : InicialController.getCuentas()) {
-            System.out.println(cuenta.toString());
-            if (cuenta.getUsuario().equals(u.getUsuario())) {
-                return true;
-            }
-        }
-        return false;
+        return InicialController.getCuentas().contains(u);
     }
 }

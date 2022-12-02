@@ -1,8 +1,10 @@
 package com.grupo02.videogamestore;
 
+import com.grupo02.Readers.Reader;
 import com.grupo02.TDAs.DoublyCircularLinkedList;
 import com.grupo02.TDAs.LinkedList;
 import com.grupo02.TDAs.List;
+import com.grupo02.comparators.ByDeveloper;
 import com.grupo02.comparators.ByName;
 import com.grupo02.comparators.ByYear;
 import com.grupo02.videogamestore.modelo.Juego;
@@ -19,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
@@ -37,7 +40,12 @@ public class BuscarController implements Initializable {
     
     @FXML
     private CheckBox byDate;
+    @FXML
+    private CheckBox byDeveloper;
 
+    @FXML
+    private ComboBox<String> comboDeveloper;
+    
     @FXML
     private TextField textTitle;
     
@@ -49,7 +57,7 @@ public class BuscarController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Hola");
+        comboDeveloper.getItems().addAll(Reader.desarrolladoras);
     }
 
     @FXML
@@ -81,6 +89,13 @@ public class BuscarController implements Initializable {
         }
         if (byDate.isSelected() && !textDate.getText().isBlank()){
             temporales = TiendaController.listaJuegos.findAllSet(new Juego(new Date(Integer.parseInt(textDate.getText())-1900,1,1)), new ByYear());
+            setJuegos.addLast(temporales);
+        }
+        
+        if (byDeveloper.isSelected() && !comboDeveloper.getValue().isBlank()){
+            Juego j = new Juego("");
+            j.getDesarrollador().addLast(comboDeveloper.getValue());
+            temporales = TiendaController.listaJuegos.findAllSet(j, new ByDeveloper());
             setJuegos.addLast(temporales);
         }
         
