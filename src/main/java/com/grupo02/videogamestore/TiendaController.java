@@ -77,7 +77,6 @@ public class TiendaController implements Initializable {
     public static DoublyCircularLinkedList<Juego> listaJuegos;
     public static HashSet<String> generos;
     public static HashSet<String> desarrolladoras;
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -173,6 +172,14 @@ public class TiendaController implements Initializable {
         Separator sh = new Separator(Orientation.HORIZONTAL);
         sh.setPrefWidth(15);
         VBox reseñasBox = new VBox();//caja de reseñas y carga una por una todo lo que viene debajo
+        HBox cabeceraReseñas = new HBox();
+        Label lblr = new Label("Reseñas ordenar por:");
+        lblr.setFont(Font.font("Verdana", 20));
+        ComboBox<String> cbxReseña = new ComboBox();
+        cbxReseña.getItems().addAll("Puntuación de menor a mayor", "Puntucación de mayor a menor", "Reseñas recientes", "Reseñas antiguas");
+        cabeceraReseñas.getChildren().addAll(lblr, cbxReseña);
+        cabeceraReseñas.setSpacing(20);
+        reseñasBox.getChildren().add(cabeceraReseñas);
         for (Resena r : j.getResenas()) {
             HBox reseña = new HBox();//una solo reseña, la la imagen del critico y la descripción
             VBox descripcionBox = new VBox();//va la cabecera y la reseña como tal
@@ -192,12 +199,24 @@ public class TiendaController implements Initializable {
         reseñasBox.setAlignment(Pos.CENTER_LEFT);
         reseñasBox.setSpacing(15);
         contenido.setSpacing(15);
-        contenido.getChildren().addAll(datos, sh, reseñasBox);
+        HBox top = new HBox();
+        Button whishlistButton = new Button("Agregar a mi lista de deseos");
+//        whishlistButton.setOnAction(acte -> agregaraWishList(j));
+        top.getChildren().add(whishlistButton);
+        top.setPadding(new Insets(10, 10, 10, 10));
+        top.setAlignment(Pos.CENTER_RIGHT);
+        contenido.getChildren().addAll(top, datos, sh, reseñasBox);
         root.setContent(contenido);
         Scene scene = new Scene(root, 900, 700);
         stage.setScene(scene);
         stage.show();
     }
+    
+//    private static void agregaraWishList(Juego j) {
+//        if ((wishlist.isEmpty()) || (!wishlist.contains(j))) {
+//            wishlist.addLast(j);
+//        }
+//    }
 
     private static void mostraBotones(Pane pJuegos, Pane pExterior, DoublyCircularLinkedList<Juego> mostrados, DoublyCircularLinkedList<Juego> originales, int largo, int ancho) {
 
