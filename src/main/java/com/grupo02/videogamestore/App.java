@@ -20,7 +20,6 @@ public class App extends Application {
     private static Scene scene;
     public static String filePath = "src/main/resources/archivos/";
     public static String fileImage = "src/main/resources/imagenes/";
-    private static Usuario user;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -42,15 +41,6 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-    public static Usuario getUser() {
-        return user;
-    }
-
-    public static void setUser(Usuario user) {
-        App.user = user;
-    }
-
     public static Scene getScene() {
         return scene;
     }
