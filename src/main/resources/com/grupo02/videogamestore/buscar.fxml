@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootBuscar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.BuscarController">
+<VBox fx:id="rootBuscar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo02.videogamestore.BuscarController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="579.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="579.0">
          <children>
             <Button fx:id="btnvolver" mnemonicParsing="false" onAction="#volver" text="&lt;">
                <font>
@@ -27,7 +27,7 @@
          <children>
             <Label text="Tipos de busqueda">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="28.0" />
                </font>
             </Label>
             <HBox alignment="CENTER" spacing="20.0">
@@ -35,13 +35,13 @@
                   <VBox fx:id="pName" alignment="CENTER_LEFT" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
                      <children>
                         <CheckBox fx:id="byTitle" mnemonicParsing="false" prefWidth="150.0" text="Por titulo:" />
-                        <TextField fx:id="textTitle" promptText="Ej: Conter" />
+                        <TextField fx:id="textTitle" promptText="Ej: Counter" />
                      </children>
                   </VBox>
                   <VBox fx:id="pDate" alignment="CENTER_LEFT" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
                      <children>
                         <CheckBox fx:id="byDate" mnemonicParsing="false" prefWidth="150.0" text="Por año:" />
-                        <TextField fx:id="textDate" promptText="Ej: 2002" />
+                        <TextField fx:id="textDate" promptText="Ej: 2000" />
                      </children>
                   </VBox>
                   <VBox fx:id="pDate1" alignment="CENTER_LEFT" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
